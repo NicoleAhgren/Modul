@@ -8,15 +8,20 @@ class Timer {
   this.startTime = Date.now()
  }
 
+ elapsedTime() {
+  if (!this.startTime || !this.seconds) return null
+  return (Date.now() - this.startTime) / 1000
+ }
+
  isExpired() {
-  if (!this.startTime || !this.seconds) return false
-  const elapsed = (Date.now() - this.startTime) / 1000
+  const elapsed = this.elapsedTime()
+  if (elapsed === null) return false
   return elapsed > this.seconds
  }
 
  getTimeLeft() {
-  if (!this.startTime || !this.seconds) return null
-  const elapsed = (Date.now() - this.startTime) / 1000
+  const elapsed = this.elapsedTime()
+  if (elapsed === null) return null
   return Math.max(0, Math.round(this.seconds - elapsed))
  }
 }
