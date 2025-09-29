@@ -41,3 +41,5 @@ class AnswerLog {
     this.entries = []
   }
 }
+
+export { AnswerLog }
