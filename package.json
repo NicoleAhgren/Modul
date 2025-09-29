@@ -1,0 +1,16 @@
+{
+  "name": "quiz-engine",
+  "version": "1.0.0",
+  "description": "A module to make a quiz with timer, points and random questions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicoleAhgren/Modul.git"
+  },
+  "license": "MIT",
+  "author": "Nicole Åhgren",
+  "type": "module",
+  "main": "sc/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
