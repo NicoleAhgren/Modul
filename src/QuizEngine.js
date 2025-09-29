@@ -1,3 +1,4 @@
+import Question from './Question.js'
 
 class QuizEngine {
   constructor() {

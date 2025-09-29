@@ -5,3 +5,5 @@ class Question {
     this.correctIndex = correctIndex
   }
 }
+
+export { Question }
