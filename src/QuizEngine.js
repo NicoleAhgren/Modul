@@ -29,4 +29,27 @@ class QuizEngine {
     const question = new Question(text, answers, correctIndex)
     this.allQuestions.push(question)
   }
+
+  startQuiz(limit = null) {
+    if (this.allQuestions.length === 0) {
+      throw new Error('No questions available to start the quiz')
+    }
+    // If limit is null or greater than available questions, use all questions
+    if (limit !== null && (typeof limit !== 'number' || limit < 1 || !Number.isInteger(limit))) {
+      throw new Error('Limit must be a positive integer')
+    }
+
+    const totalQuestions = this.allQuestions.length
+    const numQuestions = limit ? Math.min(limit, totalQuestions) : totalQuestions
+
+    // creates a copy of the array, shuffles it and selects the first questions from the array.
+    const shuffled = this.shuffleArray([...this.allQuestions])
+    this.activeQuestions = shuffled.slice(0, numQuestions)
+    
+    // Reset state for new quiz session
+    this.currentIndex = -1
+    this.score = 0
+    this.correctAnswers = []
+    this.answerLog = []
+  }
 }
