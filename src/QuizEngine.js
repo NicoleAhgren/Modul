@@ -52,4 +52,13 @@ class QuizEngine {
     this.correctAnswers = []
     this.answerLog = []
   }
+
+  getNextQuestion() {
+    // Returns the next question or null if there are no more questions
+    if (this.currentIndex + 1 >= this.activeQuestions.length) {
+      return null
+    }
+    this.currentIndex++
+    return this.activeQuestions[this.currentIndex]
+  }
 }
