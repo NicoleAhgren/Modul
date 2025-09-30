@@ -80,6 +80,8 @@ class QuizEngine {
     
     const question = this.activeQuestions[this.currentIndex]
     const shuffle = this.shuffleAnswers(question)
+
+    question.shuffledCorrectIndex = shuffle.newCorrectIndex
     
     return {
       text: question.text,
@@ -91,7 +93,7 @@ class QuizEngine {
   checkAnswer(answerIndex) {
     const currentQ = this.activeQuestions[this.currentIndex]
     const timeExpired = this.timer.isExpired() || false
-    const correctAnswer = !timeExpired && answerIndex === currentQ.correctIndex
+    const correctAnswer = !timeExpired && answerIndex === currentQ.shuffledCorrectIndex
     const answerTime = timeExpired ? null : this.timer.elapsedTime()
 
     if (correctAnswer) {
@@ -101,11 +103,13 @@ class QuizEngine {
 
     this.answerLog.addEntry(
       currentQ.text,
-      currentQ.correctIndex,
-      timeExpired ? null : answerIndex, // answer or null if time expired
+      answerIndex,
+      currentQ.shuffledCorrectIndex,
       correctAnswer,
-      answerTime
+      answerTime,
+      timeExpired
     )
+    return correctAnswer
   }
   getScore() {
     return this.score

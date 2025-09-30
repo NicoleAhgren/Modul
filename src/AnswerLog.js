@@ -3,12 +3,13 @@ class AnswerLog {
     this.entries = [] 
   }
 
-  addEntry(questionText, selectedIndex, correctIndex, isCorrect, timeExpired) {
+  addEntry(questionText, selectedIndex, shuffledCorrectIndex, isCorrect, timeExpired, answerTime) {
     this.entries.push({
       question: questionText,
       selected: selectedIndex,
-      correct: correctIndex,
+      correct: shuffledCorrectIndex,
       isCorrect,
+      answerTime: answerTime,
       timeExpired,
       timestamp: new Date().toISOString()
     })
