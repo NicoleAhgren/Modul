@@ -27,6 +27,15 @@ class QuizEngine {
     this.allQuestions.push(question)
   }
 
+  shuffleArray(array) {
+    const shuffled = [...array]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const random = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[random]] = [shuffled[random], shuffled[i]]
+    }
+    return shuffled
+  }
+
   startQuiz(limit = null, seconds = null) {
     if (this.allQuestions.length === 0) {
       throw new Error('No questions available to start the quiz')
@@ -40,8 +49,8 @@ class QuizEngine {
     const numQuestions = limit ? Math.min(limit, totalQuestions) : totalQuestions // number of questions to use
 
     // creates a copy of the array, shuffles it and selects the first questions from the array.
-    // const shuffled = this.shuffleArray([...this.allQuestions])
-    // this.activeQuestions = shuffled.slice(0, numQuestions)
+    const shuffled = this.shuffleArray([...this.allQuestions])
+    this.activeQuestions = shuffled.slice(0, numQuestions)
     
     // Reset state for new quiz session
     this.currentIndex = -1
