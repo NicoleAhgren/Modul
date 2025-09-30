@@ -22,21 +22,27 @@ class AnswerLog {
     const totalAnswers = this.entries.length
     const correctAnswers = this.entries.filter(entry => entry.isCorrect).length
     const timeouts = this.entries.filter(entry => entry.timeExpired).length
+    const wrongAnswers = this.entries.filter(entry => !entry.isCorrect && !entry.timeExpired).length
     return {
       total: totalAnswers,
       correct: correctAnswers,
-      wrong: totalAnswers - correctAnswers,
-      timeouts
+      wrong: wrongAnswers,
+      timeExpired: timeouts
     }
   }
 
   getSummary() {
-    return this.entries.map(entry => ({
-      question: entry.question,
-      status: entry.isCorrect ? "Correct" : entry.timeExpired ? "Times up!" : "Wrong"
-    }))
+    return this.entries.map(entry => {
+      if (entry.isCorrect) {
+        return { question: entry.question, status: "Correct" }
+      }
+      if (entry.timeExpired) {
+        return { question: entry.question, status: "Times up!" }
+      }
+      return { question: entry.question, status: "Wrong" }
+    })
   }
-
+  
   clear() {
     this.entries = []
   }
