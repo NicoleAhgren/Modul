@@ -107,6 +107,9 @@ class QuizEngine {
       answerTime
     )
   }
+  getScore() {
+    return this.score
+  }
 
   // Resets the quiz without changing the question pool
   resetQuiz() {

@@ -1,4 +1,4 @@
-import { QuizEngine } from './src/QuizEngine.js'
+import { QuizEngine } from '../src/QuizEngine.js'
 
 try {
   const quiz = new QuizEngine()
