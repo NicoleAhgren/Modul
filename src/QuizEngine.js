@@ -36,6 +36,13 @@ class QuizEngine {
     return shuffled
   }
 
+  shuffleAnswers(question) {
+    const correctAnswer = question.answers[question.correctIndex]
+    const shuffledAnswers = this.shuffleArray([...question.answers])
+    const newIndex = shuffledAnswers.indexOf(correctAnswer)
+    return { shuffledAnswers: shuffledAnswers, newCorrectIndex: newIndex}
+  }
+
   startQuiz(limit = null, seconds = null) {
     if (this.allQuestions.length === 0) {
       throw new Error('No questions available to start the quiz')
@@ -47,11 +54,15 @@ class QuizEngine {
 
     const totalQuestions = this.allQuestions.length
     const numQuestions = limit ? Math.min(limit, totalQuestions) : totalQuestions // number of questions to use
-    
+
     // creates a copy of the array, shuffles it and selects the first questions from the array.
     const shuffled = this.shuffleArray([...this.allQuestions])
     this.activeQuestions = shuffled.slice(0, numQuestions)
     
+    this.currentIndex = -1
+    this.score = 0
+    this.correctAnswers = []
+    this.answerLog = new AnswerLog()
     this.timer = new Timer(seconds)
   }
 
@@ -62,15 +73,17 @@ class QuizEngine {
     }
     this.currentIndex++
     this.timer.start()
-    return this.activeQuestions[this.currentIndex]
+    
+    const question = this.activeQuestions[this.currentIndex]
+    const shuffle = this.shuffleAnswers(question)
+    
+    return {
+      text: question.text,
+      answers: shuffle.shuffledAnswers,
+      correctIndex: shuffle.newCorrectIndex
+    }
   }
 
-  resetQuiz() {
-    this.currentIndex = -1
-    this.score = 0
-    this.correctAnswers = []
-    this.answerLog.clear()
-  }
 }
 
 export { QuizEngine }

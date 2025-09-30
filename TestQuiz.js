@@ -11,16 +11,22 @@ try {
   quiz.addQuestion("Vilket år landade Apollo 11 på månen?", ["1965", "1969", "1971"], 1)
   quiz.addQuestion("Vad är huvudstaden i Frankrike?", ["Berlin", "Madrid", "Paris"], 2)
 
-  quiz.startQuiz(3 , 30)
+  quiz.startQuiz(3 , null)
   
   // Visa alla frågor som lagts till
   console.log("\n Tillagda frågor:")
-  quiz.activeQuestions.forEach((question, index) => {
-    console.log(`${index + 1}. ${question.text}`)
-    console.log(` Alternativ: ${question.answers.join(', ')}`)
-    console.log(` Rätt svar: ${question.answers[question.correctIndex]} (index ${question.correctIndex})`)
 
-  })
+  let questionNumber = 1
+  let question = quiz.getNextQuestion()  
+
+  while (question) {
+    console.log(`${questionNumber}. ${question.text}`)
+    console.log(` Alternativ: ${question.answers.join(', ')}`)
+    console.log(` Rätt svar: ${question.answers[question.correctIndex]} (index ${question.correctIndex})\n`)
+    
+    questionNumber++
+    question = quiz.getNextQuestion()
+  }
 
   } catch (error) {
     console.error(error.message)
