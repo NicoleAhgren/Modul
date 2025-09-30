@@ -40,7 +40,10 @@ class QuizEngine {
     const correctAnswer = question.answers[question.correctIndex]
     const shuffledAnswers = this.shuffleArray([...question.answers])
     const newIndex = shuffledAnswers.indexOf(correctAnswer)
-    return { shuffledAnswers: shuffledAnswers, newCorrectIndex: newIndex}
+    return {
+      shuffledAnswers: shuffledAnswers,
+      newCorrectIndex: newIndex
+    }
   }
 
   startQuiz(limit = null, seconds = null) {
@@ -55,15 +58,16 @@ class QuizEngine {
     const totalQuestions = this.allQuestions.length
     const numQuestions = limit ? Math.min(limit, totalQuestions) : totalQuestions // number of questions to use
 
-    // creates a copy of the array, shuffles it and selects the first questions from the array.
+    // creates a copy of the array, shuffles it and selects the first questions from the array/starts quiz.
     const shuffled = this.shuffleArray([...this.allQuestions])
     this.activeQuestions = shuffled.slice(0, numQuestions)
+    this.timer = new Timer(seconds)
     
+    // Reset quiz state
     this.currentIndex = -1
     this.score = 0
     this.correctAnswers = []
     this.answerLog = new AnswerLog()
-    this.timer = new Timer(seconds)
   }
 
   getNextQuestion() {
@@ -84,6 +88,25 @@ class QuizEngine {
     }
   }
 
+  // Resets the quiz without changing the question pool
+  resetQuiz() {
+    this.currentIndex = -1
+    this.score = 0
+    this.correctAnswers = []
+    this.answerLog.clear()
+  }
+
+  getAnswerLog() {
+    return this.answerLog.getAnswerLog()
+  }
+
+  getStats() {
+    return this.answerLog.getAnswerStats()
+  }
+
+  summary() {
+    return this.answerLog.getSummary()
+  }
 }
 
 export { QuizEngine }
