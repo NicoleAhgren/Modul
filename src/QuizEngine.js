@@ -1,4 +1,4 @@
-import Question from './Question.js'
+import { Question } from './Question.js'
 import{ Timer } from './Timer.js'
 import { AnswerLog } from './AnswerLog.js'
 
@@ -40,8 +40,8 @@ class QuizEngine {
     const numQuestions = limit ? Math.min(limit, totalQuestions) : totalQuestions // number of questions to use
 
     // creates a copy of the array, shuffles it and selects the first questions from the array.
-    const shuffled = this.shuffleArray([...this.allQuestions])
-    this.activeQuestions = shuffled.slice(0, numQuestions)
+    // const shuffled = this.shuffleArray([...this.allQuestions])
+    // this.activeQuestions = shuffled.slice(0, numQuestions)
     
     // Reset state for new quiz session
     this.currentIndex = -1
