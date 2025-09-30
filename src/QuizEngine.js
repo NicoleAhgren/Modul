@@ -47,16 +47,11 @@ class QuizEngine {
 
     const totalQuestions = this.allQuestions.length
     const numQuestions = limit ? Math.min(limit, totalQuestions) : totalQuestions // number of questions to use
-
+    
     // creates a copy of the array, shuffles it and selects the first questions from the array.
     const shuffled = this.shuffleArray([...this.allQuestions])
     this.activeQuestions = shuffled.slice(0, numQuestions)
     
-    // Reset state for new quiz session
-    this.currentIndex = -1
-    this.score = 0
-    this.correctAnswers = []
-    this.answerLog = new AnswerLog()
     this.timer = new Timer(seconds)
   }
 
@@ -66,7 +61,15 @@ class QuizEngine {
       return null
     }
     this.currentIndex++
+    this.timer.start()
     return this.activeQuestions[this.currentIndex]
+  }
+
+  resetQuiz() {
+    this.currentIndex = -1
+    this.score = 0
+    this.correctAnswers = []
+    this.answerLog.clear()
   }
 }
 
