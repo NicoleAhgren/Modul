@@ -7,7 +7,7 @@ class QuizEngine {
     this.allQuestions = [] // All added questions
     this.activeQuestions = [] // Questions in the current quiz session
     this.currentIndex = -1 // Index of the current question
-    this.score = 0 // Number of correct answers/points
+    this.score = 0 
     this.correctAnswers = [] // Correct answers given
     this.answerLog = new AnswerLog() // Log of all answers
     this.timer = null
@@ -86,6 +86,26 @@ class QuizEngine {
       answers: shuffle.shuffledAnswers,
       correctIndex: shuffle.newCorrectIndex
     }
+  }
+
+  checkAnswer(answerIndex) {
+    const currentQ = this.activeQuestions[this.currentIndex]
+    const timeExpired = this.timer.isExpired() || false
+    const correctAnswer = !timeExpired && answerIndex === currentQ.correctIndex
+    const answerTime = timeExpired ? null : this.timer.elapsedTime()
+
+    if (correctAnswer) {
+      this.score++
+      this.correctAnswers.push(currentQ)
+    }
+
+    this.answerLog.addEntry(
+      currentQ.text,
+      currentQ.correctIndex,
+      timeExpired ? null : answerIndex, // answer or null if time expired
+      correctAnswer,
+      answerTime
+    )
   }
 
   // Resets the quiz without changing the question pool
