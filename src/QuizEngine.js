@@ -1,4 +1,6 @@
 import Question from './Question.js'
+import{ Timer } from './Timer.js'
+import { AnswerLog } from './AnswerLog.js'
 
 class QuizEngine {
   constructor() {
@@ -7,7 +9,8 @@ class QuizEngine {
     this.currentIndex = -1 // Index of the current question
     this.score = 0 // Number of correct answers/points
     this.correctAnswers = [] // Correct answers given
-    this.answerLog = [] // Log of all answers given. Is used to calculate score
+    this.answerLog = new AnswerLog() // Log of all answers
+    this.timer = null
   }
 
   addQuestion(text, answers, correctIndex) {
@@ -24,7 +27,7 @@ class QuizEngine {
     this.allQuestions.push(question)
   }
 
-  startQuiz(limit = null) {
+  startQuiz(limit = null, seconds = null) {
     if (this.allQuestions.length === 0) {
       throw new Error('No questions available to start the quiz')
     }
@@ -34,7 +37,7 @@ class QuizEngine {
     }
 
     const totalQuestions = this.allQuestions.length
-    const numQuestions = limit ? Math.min(limit, totalQuestions) : totalQuestions
+    const numQuestions = limit ? Math.min(limit, totalQuestions) : totalQuestions // number of questions to use
 
     // creates a copy of the array, shuffles it and selects the first questions from the array.
     const shuffled = this.shuffleArray([...this.allQuestions])
@@ -44,7 +47,8 @@ class QuizEngine {
     this.currentIndex = -1
     this.score = 0
     this.correctAnswers = []
-    this.answerLog = []
+    this.answerLog = new AnswerLog()
+    this.timer = new Timer(seconds)
   }
 
   getNextQuestion() {
@@ -56,3 +60,5 @@ class QuizEngine {
     return this.activeQuestions[this.currentIndex]
   }
 }
+
+export { QuizEngine }
