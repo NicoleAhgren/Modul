@@ -2,7 +2,7 @@
 
 En JavaScript-modul för att skapa interaktiva quiz med timer, poängsystem, slumpmässiga frågor och detaljerad statistik.
 
-## 🎯 Vad gör denna modul?
+## Vad gör denna modul?
 
 - **Skapa quiz** med flervalsfrågor
 - **Hantera timer** för varje fråga (valfritt)
@@ -12,7 +12,7 @@ En JavaScript-modul för att skapa interaktiva quiz med timer, poängsystem, slu
 - **Generera statistik** över prestanda
 - **Validera input** med robust felhantering
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Klona projektet
