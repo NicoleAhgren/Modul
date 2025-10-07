@@ -40,9 +40,21 @@ try {
 
     const answer = await ask("\nDitt svar (ange siffra): ")
   
+    const answerIndex = parseInt(answer) - 1
+    const isCorrect = quiz.checkAnswer(answerIndex)
+
+    if (isCorrect ) {
+      console.log("Rätt!\n")
+    } else {
+      console.log("Fel!\n")
+    }
+
     questionNumber++
     question = quiz.getNextQuestion()
   }
+
+  console.log(quiz.getStats())
+  rl.close()
 
   } catch (error) {
     console.error(error.message)
