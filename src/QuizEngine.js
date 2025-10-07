@@ -29,10 +29,15 @@ class QuizEngine {
 
   shuffleArray(array) {
     const shuffled = [...array]
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const random = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[random]] = [shuffled[random], shuffled[i]]
-    }
+    let i = shuffled.length, randomIndex, tempValue
+
+    while (--i > 0) {
+      randomIndex = Math.floor(Math.random() * (i + 1))
+      tempValue = shuffled[randomIndex]
+      shuffled[randomIndex] = shuffled[i]
+      shuffled[i] = tempValue
+      }
+
     return shuffled
   }
 
@@ -40,6 +45,7 @@ class QuizEngine {
     const correctAnswer = question.answers[question.correctIndex]
     const shuffledAnswers = this.shuffleArray([...question.answers])
     const newIndex = shuffledAnswers.indexOf(correctAnswer)
+    
     return {
       shuffledAnswers: shuffledAnswers,
       newCorrectIndex: newIndex
