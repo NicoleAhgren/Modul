@@ -1,4 +1,16 @@
 import { QuizEngine } from '../src/QuizEngine.js'
+import { createInterface } from 'readline'
+
+const rl = createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
+function ask(question) {
+  return new Promise(resolve => {
+    rl.question(question, answer => resolve(answer.trim()))
+  })
+}
 
 try {
   const quiz = new QuizEngine()
@@ -11,7 +23,7 @@ try {
   quiz.addQuestion("Vilket år landade Apollo 11 på månen?", ["1965", "1969", "1971"], 1)
   quiz.addQuestion("Vad är huvudstaden i Frankrike?", ["Berlin", "Madrid", "Paris"], 2)
 
-  quiz.startQuiz(3 , null)
+  quiz.startQuiz(3 , 15)
   
   // Visa alla frågor som lagts till
   console.log("\n Tillagda frågor:")
@@ -20,10 +32,14 @@ try {
   let question = quiz.getNextQuestion()  
 
   while (question) {
-    console.log(`${questionNumber}. ${question.text}`)
-    console.log(` Alternativ: ${question.answers.join(', ')}`)
-    console.log(` Rätt svar: ${question.answers[question.correctIndex]} (index ${question.correctIndex})\n`)
-    
+    console.log(`\n${questionNumber}. ${question.text}\n`)
+    question.answers.forEach((answer, index) => {
+      const answerNumber = index + 1
+      console.log(`${answerNumber}. ${answer}`)
+    })
+
+    const answer = await ask("\nDitt svar (ange siffra): ")
+  
     questionNumber++
     question = quiz.getNextQuestion()
   }
@@ -31,3 +47,4 @@ try {
   } catch (error) {
     console.error(error.message)
   }
+
