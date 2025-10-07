@@ -112,8 +112,8 @@ class QuizEngine {
       answerIndex,
       currentQ.shuffledCorrectIndex,
       correctAnswer,
-      answerTime,
-      timeExpired
+      timeExpired,
+      answerTime
     )
     return correctAnswer
   }
