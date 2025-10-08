@@ -1,25 +1,26 @@
+
 class AnswerLog {
-  constructor() {
-    this.entries = [] 
+  constructor () {
+    this.entries = []
   }
 
-  addEntry(questionText, selectedIndex, shuffledCorrectIndex, isCorrect, timeExpired, answerTime) {
+  addEntry (questionText, selectedIndex, shuffledCorrectIndex, isCorrect, timeExpired, answerTime) {
     this.entries.push({
       question: questionText,
       selected: selectedIndex,
       correct: shuffledCorrectIndex,
       isCorrect,
-      answerTime: answerTime,
+      answerTime,
       timeExpired,
       timestamp: new Date().toISOString()
     })
   }
 
-  getAnswerLog() {
+  getAnswerLog () {
     return [...this.entries]
   }
 
-  getAnswerStats() {
+  getAnswerStats () {
     const totalAnswers = this.entries.length
     const correctAnswers = this.entries.filter(entry => entry.isCorrect).length
     const timeouts = this.entries.filter(entry => entry.timeExpired).length
@@ -32,19 +33,19 @@ class AnswerLog {
     }
   }
 
-  getSummary() {
+  getSummary () {
     return this.entries.map(entry => {
       if (entry.isCorrect) {
-        return { question: entry.question, status: "Correct" }
+        return { question: entry.question, status: 'Correct' }
       }
       if (entry.timeExpired) {
-        return { question: entry.question, status: "Times up!" }
+        return { question: entry.question, status: 'Times up!' }
       }
-      return { question: entry.question, status: "Wrong" }
+      return { question: entry.question, status: 'Wrong' }
     })
   }
-  
-  clear() {
+
+  clear () {
     this.entries = []
   }
 }

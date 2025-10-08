@@ -1,13 +1,13 @@
-import { QuizEngine} from './QuizEngine.js'
+import { QuizEngine } from './QuizEngine.js'
 import { Question } from './Question.js'
 import { Timer } from './Timer.js'
 import { AnswerLog } from './AnswerLog.js'
 
-export { 
+export {
   QuizEngine,
-  Question, 
-  Timer, 
-  AnswerLog 
- }
+  Question,
+  Timer,
+  AnswerLog
+}
 
 export default QuizEngine

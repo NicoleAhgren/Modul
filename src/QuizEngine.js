@@ -1,20 +1,20 @@
 import { Question } from './Question.js'
-import{ Timer } from './Timer.js'
+import { Timer } from './Timer.js'
 import { AnswerLog } from './AnswerLog.js'
 
 class QuizEngine {
-  constructor() {
+  constructor () {
     this.allQuestions = [] // All added questions
     this.activeQuestions = [] // Questions in the current quiz session
     this.currentIndex = -1 // Index of the current question
-    this.score = 0 
+    this.score = 0
     this.correctAnswers = [] // Correct answers given
     this.answerLog = new AnswerLog() // Log of all answers
     this.timer = null
   }
 
-  addQuestion(text, answers, correctIndex) {
-    if (!text){
+  addQuestion (text, answers, correctIndex) {
+    if (!text) {
       throw new Error('Invalid question format')
     }
     if (!Array.isArray(answers) || answers.length < 2) {
@@ -27,7 +27,7 @@ class QuizEngine {
     this.allQuestions.push(question)
   }
 
-  shuffleArray(array) {
+  shuffleArray (array) {
     const shuffled = [...array]
     let i = shuffled.length, randomIndex, tempValue
 
@@ -36,23 +36,23 @@ class QuizEngine {
       tempValue = shuffled[randomIndex]
       shuffled[randomIndex] = shuffled[i]
       shuffled[i] = tempValue
-      }
+    }
 
     return shuffled
   }
 
-  shuffleAnswers(question) {
+  shuffleAnswers (question) {
     const correctAnswer = question.answers[question.correctIndex]
     const shuffledAnswers = this.shuffleArray([...question.answers])
     const newIndex = shuffledAnswers.indexOf(correctAnswer)
-    
+
     return {
-      shuffledAnswers: shuffledAnswers,
+      shuffledAnswers,
       newCorrectIndex: newIndex
     }
   }
 
-  startQuiz(limit = null, seconds = null) {
+  startQuiz (limit = null, seconds = null) {
     if (this.allQuestions.length === 0) {
       throw new Error('No questions available to start the quiz')
     }
@@ -68,7 +68,7 @@ class QuizEngine {
     const shuffled = this.shuffleArray([...this.allQuestions])
     this.activeQuestions = shuffled.slice(0, numQuestions)
     this.timer = new Timer(seconds)
-    
+
     // Reset quiz state
     this.currentIndex = -1
     this.score = 0
@@ -76,19 +76,19 @@ class QuizEngine {
     this.answerLog = new AnswerLog()
   }
 
-  getNextQuestion() {
+  getNextQuestion () {
     // Returns the next question or null if there are no more questions
     if (this.currentIndex + 1 >= this.activeQuestions.length) {
       return null
     }
     this.currentIndex++
     this.timer.start()
-    
+
     const question = this.activeQuestions[this.currentIndex]
     const shuffle = this.shuffleAnswers(question)
 
     question.shuffledCorrectIndex = shuffle.newCorrectIndex
-    
+
     return {
       text: question.text,
       answers: shuffle.shuffledAnswers,
@@ -96,7 +96,7 @@ class QuizEngine {
     }
   }
 
-  checkAnswer(answerIndex) {
+  checkAnswer (answerIndex) {
     const currentQ = this.activeQuestions[this.currentIndex]
     const timeExpired = this.timer.isExpired() || false
     const correctAnswer = !timeExpired && answerIndex === currentQ.shuffledCorrectIndex
@@ -117,27 +117,28 @@ class QuizEngine {
     )
     return correctAnswer
   }
-  getScore() {
+
+  getScore () {
     return this.score
   }
 
   // Resets the quiz without changing the question pool
-  resetQuiz() {
+  resetQuiz () {
     this.currentIndex = -1
     this.score = 0
     this.correctAnswers = []
     this.answerLog.clear()
   }
 
-  getAnswerLog() {
+  getAnswerLog () {
     return this.answerLog.getAnswerLog()
   }
 
-  getStats() {
+  getStats () {
     return this.answerLog.getAnswerStats()
   }
 
-  summary() {
+  summary () {
     return this.answerLog.getSummary()
   }
 }
