@@ -14,15 +14,15 @@ function ask (question) {
 
 function timerDisplay (quiz) {
   const interval = setInterval(() => {
-    if (quiz.timer && gunzip.timer.seconds) {
+    if (quiz.timer && quiz.timer.seconds) {
       const timeLeft = quiz.timer.getTimeLeft()
 
       if (timeLeft > 0) {
         // Visa tiden kvar på samma rad.
-        process.stdout.write(`Tid kvar: ${timeLeft} sekunder `)
+        process.stdout.write(`\rTid kvar: ${timeLeft} sekunder `)
       } else {
         clearInterval(interval)
-        console.log('Tiden är ute!')
+        console.log('\nTiden är ute!')
         console.log('Tryck ENTER för nästa fråga')
       }
     }
@@ -56,15 +56,19 @@ try {
       console.log(`${answerNumber}. ${answer}`)
     })
 
+    const timer = timerDisplay(quiz)
     const answer = await ask('\nDitt svar (ange siffra): ')
-
+    
     // Konvertera svaret till ett index (nummer)
     const answerIndex = parseInt(answer) - 1
     const isCorrect = quiz.checkAnswer(answerIndex)
+    clearInterval(timer)
 
     if (isCorrect) {
       console.log('Rätt!\n')
-    } else {
+    } else if (quiz.timer.isExpired()) {
+      quiz.checkAnswer(null)
+    }else {
       console.log('Fel!\n')
     }
 
