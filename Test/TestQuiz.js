@@ -19,14 +19,14 @@ function timerDisplay (quiz) {
 
       if (timeLeft > 0) {
         // Visa tiden kvar på samma rad.
-        process.stdout.write(`\rTid kvar: ${timeLeft} sekunder `)
+        process.stdout.write(`\rTid kvar: ${timeLeft} sekunder: `)
       } else {
         clearInterval(interval)
         console.log('\nTiden är ute!')
         console.log('Tryck ENTER för nästa fråga')
       }
     }
-  }, 1000)
+  }, 500)
   return interval
 }
 
@@ -41,7 +41,8 @@ try {
   quiz.addQuestion('Vilket år landade Apollo 11 på månen?', ['1965', '1969', '1971'], 1)
   quiz.addQuestion('Vad är huvudstaden i Frankrike?', ['Berlin', 'Madrid', 'Paris'], 2)
 
-  quiz.startQuiz(3, 15)
+  quiz.startQuiz(3, 5
+  )
 
   // Visa alla frågor som lagts till
   console.log('\n Tillagda frågor:')
@@ -56,20 +57,16 @@ try {
       console.log(`${answerNumber}. ${answer}`)
     })
 
-    const timer = timerDisplay(quiz)
-    const answer = await ask('\nDitt svar (ange siffra): ')
-    
-    // Konvertera svaret till ett index (nummer)
-    const answerIndex = parseInt(answer) - 1
-    const isCorrect = quiz.checkAnswer(answerIndex)
+    const timer = timerDisplay(quiz)  // Vänta på att användaren trycker ENTER för att starta frågan
+    const answer = await ask('\nDitt svar (ange siffra): \n')
     clearInterval(timer)
 
-    if (isCorrect) {
-      console.log('Rätt!\n')
-    } else if (quiz.timer.isExpired()) {
+   if (quiz.timer.isExpired()) {
       quiz.checkAnswer(null)
-    }else {
-      console.log('Fel!\n')
+    } else {
+      const answerIndex = parseInt(answer) - 1
+      const isCorrect = quiz.checkAnswer(answerIndex)
+      console.log(isCorrect ? "Rätt!" : "Fel!")
     }
 
     questionNumber++
