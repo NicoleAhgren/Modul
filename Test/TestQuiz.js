@@ -12,6 +12,24 @@ function ask (question) {
   })
 }
 
+function timerDisplay (quiz) {
+  const interval = setInterval(() => {
+    if (quiz.timer && gunzip.timer.seconds) {
+      const timeLeft = quiz.timer.getTimeLeft()
+
+      if (timeLeft > 0) {
+        // Visa tiden kvar på samma rad.
+        process.stdout.write(`Tid kvar: ${timeLeft} sekunder `)
+      } else {
+        clearInterval(interval)
+        console.log('Tiden är ute!')
+        console.log('Tryck ENTER för nästa fråga')
+      }
+    }
+  }, 1000)
+  return interval
+}
+
 try {
   const quiz = new QuizEngine()
 
