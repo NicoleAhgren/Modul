@@ -1,6 +1,6 @@
 {
   "name": "quiz-engine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A module to make a quiz with timer, points and random questions",
   "repository": {
     "type": "git",
