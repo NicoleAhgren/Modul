@@ -122,7 +122,6 @@ class QuizEngine {
     return this.score
   }
 
-  // Resets the quiz without changing the question pool
   resetQuiz () {
     this.currentIndex = -1
     this.score = 0
