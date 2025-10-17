@@ -1,3 +1,5 @@
+# Reflektion clean code
+
 | Namn | Förklaring | Reflektion & regler från clean code |
 |------|------------|-------------------------------------|
 | currentQ | Variabel i metoden checkAnswer() som är en referens till Question objektet i activeQuestions | **Avoid mental mapping & Use searchable names** - Jag valde att bara använda mig av en bokstav i andra namnet vilket kan göra det förvirrande för både mig sjäv och andra programmerare framöver eftersom man måste anta vad Q ska stå för, jag hade istället kunnat välja ett bättre namn som exempelvis currentQuestion. Det blir även svårt att hitta saker i koden om namnen är otydliga. |
@@ -6,3 +8,15 @@
 | getSummary() | Metod i klassen AnswerLog som returnerar en array med varje fråga och status med vad användaren svarade | **Method names** Namnet har en bra grund eftersom det börjar med ett verb "get" som en metod ska göra. **Add meaningful context** - Namnet visar dock återigen inte exakt vad den hämtar för sammanfattning, det hade varit bättre att ha ett namn som exempelvis getAnswerSummary() |
 | Timer | Klassen som tar hand om timern. Starta, tid som gått, om tiden gått ut och tid kvar. | **Class names** - Mitt klassnammn är kort, ett substantiv och det förklarar bra vad klassen hanterar.|
 
+## Reflektion kap 2
+
+Jag har lärt mig mycket från kapitel två, speciellt om avoid disinformation och add meaningful context som jag tycker går lite hand i hand. Jag märkte när jag läste och gick igenom koden att det var de jag hade mest problem med, jag skriver hellre korta namn än långa och förklarande. Av att läsa kapitlet har jag lärt mig hur man istället ska välja namn och varför det är viktigt. 
+
+
+
+| Metodnamn | Länk eller kod | Antal rader | Reflektion |
+|-----------|----------------|-------------|------------|
+
+
+
+ (kap 3, s. 39)"A long descriptive name is better than a short engimatic name"
