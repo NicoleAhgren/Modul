@@ -69,7 +69,6 @@ class QuizEngine {
     this.activeQuestions = shuffled.slice(0, numQuestions)
     this.timer = new Timer(seconds)
 
-    // Reset quiz state
     this.currentIndex = -1
     this.score = 0
     this.correctAnswers = []
