@@ -71,6 +71,8 @@ try {
   }
 
   console.log(quiz.getStats())
+  console.log('\nSammanfattning:')
+  console.log(quiz.summary())
   rl.close()
 } catch (error) {
   console.error(error.message)
